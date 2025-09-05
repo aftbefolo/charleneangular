@@ -1,0 +1,22 @@
+version: "3"
+services:
+  angular:
+    build:
+      context: ./angular
+      dockerfile: Dockerfile
+    container_name: product-manager-app
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./angular:/app
+    stdin_open: true
+    tty: true
+
+  json-server:
+    image: clue/json-server
+    container_name: fake-api
+    volumes:
+      - ./api:/data
+    ports:
+      - "3000:80"
+    command: json-server --watch /data/db.json --port 80
